@@ -1,16 +1,25 @@
+import os
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from dotenv import load_dotenv
 
-# 1. พิกัดฐานข้อมูล MySQL
-# หากท่านมีรหัสผ่าน ให้ใส่หลัง root: เช่น root:password@localhost
-SQLALCHEMY_DATABASE_URL = "mysql+pymysql://root:@localhost/darkgemini_db"
+load_dotenv()
 
-# 2. สร้าง Engine (ตัด connect_args ออกเพราะ MySQL ไม่ต้องการค่านี้)
-engine = create_engine(SQLALCHEMY_DATABASE_URL)
+# 🛡️ ยุทธวิธี: ดึงค่าจาก Environment Variables หากไม่มีให้ใช้ค่า Default (สำหรับ Test ในเครื่อง)
+# ใน Render ให้ท่านตั้งค่า SQLALCHEMY_DATABASE_URL ในหน้า Environment Variables ครับ
+SQLALCHEMY_DATABASE_URL = os.getenv(
+    "SQLALCHEMY_DATABASE_URL", 
+    "mysql+pymysql://root:@localhost/darkgemini_db"
+)
 
-# 3. สร้าง Session สำหรับการใช้งาน
+# 🎯 สร้าง Engine
+# เพิ่ม pool_pre_ping=True เพื่อป้องกันการหลุดการเชื่อมต่อ (Connection Timeout)
+engine = create_engine(
+    SQLALCHEMY_DATABASE_URL,
+    pool_pre_ping=True
+)
+
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-
 
 def get_db():
     db = SessionLocal()
