@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DARK GEMINI DEFENCE | UNLIMITED ACCESS</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+    <link rel="stylesheet" href="public/css/chat.css">
+</head>
+
+<body>
+    <aside id="sidebar">
+        <div class="sidebar-header">
+            <img src="public/images/Gemini_Generated_Image_uma8ejuma8ejuma8.png" alt="Dark Gemini Logo"
+                class="system-logo">
+            <h3 class="system-title">DARK GEMINI DEFENCE</h3>
+        </div>
+
+        <div class="new-chat-container">
+            <button type="button" id="new-chat-btn" class="new-chat-btn">
+                ➕ New Mission
+            </button>
+        </div>
+
+        <div class="history-section">
+            <h4 class="history-label">
+                <div class="center-text">
+                    <span class="mission-title">LATEST MISSION LOG</span>
+                </div>
+            </h4>
+            <ul id="mission-history-list"></ul>
+        </div>
+
+        <div class="commander-info">
+            <div id="status-indicator" class="status-indicator offline"></div>
+            👤 COMMANDER: <span id="commander-name">ท่านจอมพล</span><br>
+            📅 STATUS: <span id="system-status">STANDBY</span>
+        </div>
+    </aside>
+
+    <main id="main-content">
+        <header id="top-nav">
+            <button type="button" id="toggle-btn">☰</button>
+            <div class="op-code">ROOT // UNLIMITED // ACCESS</div>
+            <div id="network-status" class="status-online">● NEURAL LINK ACTIVE</div>
+        </header>
+
+        <div id="chat-container">
+        </div>
+
+        <div class="controls-wrapper">
+
+            <div id="image-preview-container" class="image-preview hidden">
+                <button type="button" class="close-preview">✕</button>
+                <img id="preview-image" src="" alt="Preview">
+            </div>
+
+            <div class="input-area">
+                <div class="core-tag">[OS: UNLOCKED]</div>
+
+                <input type="text" id="user_input" class="command-input"
+                    placeholder="⚔️ สั่งการเขียนโค้ด หรือ ขอคำสอนการแฮ็ก..." autocomplete="off" spellcheck="false">
+
+                <div class="button-group">
+                    <button type="button" id="speak-btn" class="speak-btn" title="Toggle Voice">🔊</button>
+                    <button type="button" id="clear-btn" class="clear-history-btn" title="Purge History">☠</button>
+                    <button type="button" id="add-image-btn" class="upload-btn" title="Injection Image">🧬</button>
+                    <button type="button" id="execute-btn" class="send-btn">⚡</button>
+
+                    <input type="file" id="image-upload" hidden accept="image/*">
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-clike.min.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markup-templating.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-cpp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+    <script>
+        // การตั้งค่าเริ่มต้นของระบบ
+        window.addEventListener('load', () => {
+            console.log("🛡️ [SYSTEM]: Sentinel Interface Ready for ท่านจอมพล");
+            if (window.Prism) window.Prism.manual = true; // ควบคุมการไฮไลท์ด้วย JS เองเพื่อความนิ่ง
+        });
+    </script>
+
+    <script src="public/js/chat.js"></script>
+    <script src="public/js/sidebar.js"></script>
+</body>
+
+</html>

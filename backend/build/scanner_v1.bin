@@ -1,0 +1,14 @@
+# build_signature.py
+signatures = [
+    b"DROP TABLE", 
+    b"SELECT * FROM users", 
+    b"<script>alert(1)</script>",
+    b"OR '1'='1'"
+]
+
+with open("build/scanner_v1.bin", "wb") as f:
+    for sig in signatures:
+        # เขียนข้อมูลลงไปในรูปแบบ Binary
+        f.write(sig + b"\x00") # ใช้ null byte เป็นตัวคั่น
+
+print("✅ สร้างไฟล์ scanner_v1.bin (Signature Database) สำเร็จ!")

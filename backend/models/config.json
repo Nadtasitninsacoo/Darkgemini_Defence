@@ -1,0 +1,24 @@
+{
+    "api_settings": {
+        "use_env": true,
+        "gemini_model": "gemini-2.0-flash",
+        "openai_model": "gpt-4o-mini",
+        "default_engine": "OpenAI",
+        "max_retries": 3,
+        "request_timeout": 30
+    },
+    "database": {
+        "user": "dark_commander",
+        "password_env_var": "DB_PASSWORD",
+        "host": "127.0.0.1",
+        "port": 3306,
+        "name": "darkgemini_db"
+    },
+    "security": {
+        "core_dll_path": "build/core.dll",
+        "log_level": "DEBUG",
+        "alert_threshold": "Critical",
+        "auto_revoke_on_leak": true,
+        "obfuscation_level": "High"
+    }
+}

@@ -1,0 +1,995 @@
+/* ==================================================
+   CORE SETTINGS & VARIABLES
+   ================================================== */
+:root {
+    --bg-main: #0a0a0c;
+    --sidebar-bg: #0d0d12;
+    --accent-blue: #4cc9f0;
+    --accent-purple: #9d4edd;
+    --accent-green: #00ff41;
+    --war-red: #ff4d4d;
+    --border-glow: rgba(76, 201, 240, 0.15);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -ms-overflow-style: none; /* Hide scrollbar for IE/Edge */
+    scrollbar-width: none;    /* Hide scrollbar for Firefox */
+}
+
+::-webkit-scrollbar { 
+    display: none; /* Hide scrollbar for Chrome/Safari */
+}
+
+body {
+    background: var(--bg-main);
+    color: #e0e0e0;
+    font-family: 'JetBrains Mono', monospace;
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* ==================================================
+   SIDEBAR (COMMAND CENTER) - UPDATED
+   ================================================== */
+
+#sidebar {
+    width: 240px;
+    background: #0d0d12;                 /* พื้นหลัง */
+    border-right: 2px solid #666;        /* เส้นขอบขวาสีเทา */
+    border-top-right-radius: 40px;       /* โค้งพื้นหลังมุมบนขวา */
+    overflow: hidden;                    /* กันพื้นหลังล้นมุมโค้ง */
+
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    height: 100%;
+}
+
+
+/* -------------------------------------------------- */
+
+/* COMMANDER INFO: ย้ายมาชิดขอบล่างตามบัญชา */
+
+/* -------------------------------------------------- */
+
+.commander-info {
+
+    margin-top: auto; /* 👈 หัวใจสำคัญ: ดันองค์ประกอบนี้ลงไปล่างสุดของ Sidebar */
+
+    padding: 20px;
+
+    font-size: 0.75rem; /* ปรับขนาดให้เข้ากับสไตล์ Compact */
+
+    line-height: 1.8;
+
+    border-top: 1px solid rgba(76, 201, 240, 0.1); /* เพิ่มเส้นคั่นบางๆ */
+
+    color: #00d4ff;
+
+    background: rgba(0, 0, 0, 0.2); /* เพิ่มพื้นหลังจางๆ ให้ดูแยกส่วนชัดเจน */
+
+    font-family: 'JetBrains Mono', monospace;
+
+}
+
+
+
+#commander-name {
+
+    color: #ffffff;
+
+    font-weight: bold;
+
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+
+}
+
+
+
+#system-status {
+
+    color: var(--accent-green);
+
+    text-transform: uppercase;
+
+    font-weight: 800;
+
+}
+
+
+
+/* ปรับไฟสถานะให้แสดงผลในบรรทัดเดียวกันอย่างสวยงาม */
+
+.status-indicator {
+
+    display: inline-block;
+
+    width: 8px;
+
+    height: 8px;
+
+    border-radius: 50%;
+
+    margin-right: 8px;
+
+    vertical-align: middle;
+
+}
+
+
+
+.status-indicator.offline {
+
+    background: #555;
+
+    box-shadow: none;
+
+}
+
+
+
+.status-indicator.online {
+
+    background: var(--accent-green);
+
+    box-shadow: 0 0 8px var(--accent-green);
+
+}
+
+.main-logo {
+    width: 180px;
+    height: auto;
+    filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.5));
+    transition: transform 0.3s ease;
+}
+
+.main-logo:hover { 
+    transform: scale(1.05); 
+}
+
+.system-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 900;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    background: linear-gradient(to right, #00ffcc, #0099ff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 8px rgba(0, 255, 204, 0.4));
+    margin: 10px 0;
+    padding-bottom: 5px;
+    border-bottom: 2px solid rgba(0, 255, 204, 0.3);
+    display: inline-block;
+}
+
+/* --- Compact Commander Panel --- */
+.commander-control-panel {
+    width: calc(100% - 20px);
+    margin: 10px auto;
+    padding: 8px 12px;
+    background: rgba(76, 201, 240, 0.02);
+    border: 1px solid var(--border-glow);
+    border-radius: 6px;
+}
+
+.panel-header {
+    font-size: 0.55rem;
+    letter-spacing: 1.5px;
+    margin-bottom: 5px;
+}
+
+.status-row {
+    display: flex;
+    align-items: center;
+    font-size: 0.7rem;
+    gap: 4px;
+}
+
+.status-indicator {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    margin-right: 6px;
+}
+
+.status-indicator.online { 
+    background: var(--accent-green); 
+    box-shadow: 0 0 8px var(--accent-green); 
+}
+
+/* --- Navigation & Mission History --- */
+.new-chat-container {
+    padding: 10px 15px;
+}
+
+.new-chat-btn {
+    width: 100%;
+    padding: 8px 12px;
+    background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+    color: #fff;
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 900;
+    font-size: 0.7rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 4px 15px rgba(76, 201, 240, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.new-chat-btn:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 0 20px rgba(157, 78, 221, 0.6);
+}
+
+.mission-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    margin: 15px 0 10px 0;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+    color: var(--accent-purple);
+    text-transform: uppercase;
+}
+
+.mission-title::before, .mission-title::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--accent-purple), transparent);
+    opacity: 0.3;
+}
+
+.mission-item {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 10px;
+    margin: 2px 10px;
+    background: rgba(20, 20, 20, 0.6);
+    border-left: 3px solid transparent;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    overflow: hidden;
+    border-radius: 4px;
+}
+
+.mission-item:hover {
+    background: rgba(128, 0, 128, 0.08);
+    border-left: 3px solid #8A2BE2;
+    transform: translateX(5px);
+}
+
+.mission-item .directive, .mission-text {
+    flex: 1;
+    font-size: 0.7rem;
+    color: #ccc;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* --- Tactical Terminate Button --- */
+.delete-mission-btn-hidden {
+    opacity: 0;
+    transform: translateX(20px);
+    background: none;
+    border: none;
+    color: #9370DB;
+    font-size: 1.3rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    filter: drop-shadow(0 0 5px rgba(147, 112, 219, 0.5));
+}
+
+.mission-item:hover .delete-mission-btn-hidden {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.delete-mission-btn-hidden:hover {
+    color: #E0BBE4;
+    text-shadow: 0 0 10px #D8BFD8;
+    transform: scale(1.3) rotate(15deg);
+}
+
+/* ==================================================
+   MAIN CONTENT AREA
+   ================================================== */
+#main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+#top-nav {
+    height: 50px;
+    border-bottom: 1px solid var(--border-glow);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+}
+
+#chat-container {
+    flex: 1;
+    overflow-y: auto;
+    padding: 30px;
+    background: radial-gradient(circle at center, #111 0%, var(--bg-main) 100%);
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    scroll-behavior: smooth;
+}
+
+/* ==================================================
+   ASCII LOGO & HERO SECTION
+   ================================================== */
+.hero-banner {
+    width: 100%;
+    padding: 10px 0 30px 0;
+}
+
+.ascii-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+    padding: 30px 0;
+}
+
+.ascii-logo {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    line-height: 1.1;
+    white-space: pre;
+    display: inline-block;
+    margin: 10px;
+    background: linear-gradient(135deg, #7a7a7a 0%, #dcdcdc 45%, #ffffff 50%, #dcdcdc 55%, #7a7a7a 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.4));
+    animation: silver-shine 6s linear infinite;
+}
+
+@keyframes silver-shine {
+    0% { background-position: 0% center; }
+    100% { background-position: 200% center; }
+}
+
+/* ==================================================
+   MESSAGES & CHAT BUBBLES
+   ================================================== */
+.chat-message {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    position: relative;
+}
+
+.message-content {
+    padding: 14px 20px;
+    line-height: 1.6;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
+    word-break: break-word;
+    font-size: 0.95rem;
+}
+
+.message-content pre,
+.message-content code {
+    max-width: 100%;
+    overflow-x: auto;
+    white-space: pre-wrap;
+    word-break: break-word;
+    display: block;
+}
+
+/* User (COMMANDER) */
+.user-message { align-items: flex-end; }
+.user-message .message-content {
+    background: rgba(74, 74, 74, 0.05);
+    color: #cfcfcf;
+    border-right: 4px solid var(--accent-blue);
+    border-radius: 18px 18px 4px 18px;
+    text-align: left;
+    margin-left: 15%;
+}
+
+.user-message .sender-label {
+    color: #00d4ff;
+    letter-spacing: 2px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+/* AI (SENTINEL) */
+.ai-message { align-items: flex-start; }
+.ai-message .message-content {
+    background: rgba(76, 201, 240, 0.05);
+    color: #e5e7eb;
+    border-left: 4px solid var(--accent-purple);
+    border-radius: 18px 18px 18px 4px;
+    margin-right: 15%;
+}
+
+.ai-message .sender-label {
+    color: var(--accent-purple);
+    font-size: 0.8rem;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+/* Headlines Equalizer */
+.message-content h1, .message-content h2, .message-content h3, 
+.message-content h4, .message-content h5, .message-content h6 {
+    font-size: 1rem !important;
+    margin: 10px 0;
+}
+
+/* ==================================================
+   CODE BLOCKS & SYNTAX (COMMANDER'S TACTICAL)
+   ================================================== */
+pre[class*="language-"] {
+    position: relative;
+    background: #050505 !important;
+    border: 2px solid #878787 !important;
+    border-left: 4px solid #00f2ff !important;
+    box-shadow: 0 0 25px rgba(211, 211, 211, 0.2);
+    border-radius: 8px;
+    padding: 1.5rem !important;
+    margin: 1.5rem 0;
+    white-space: pre-wrap !important;
+    word-break: break-all !important;
+    overflow-x: hidden !important;
+    color: #e0e0e0 !important;
+}
+
+/* Syntax Highlighting */
+.token.keyword { color: #b7b7b7 !important; font-weight: 900 !important; text-transform: uppercase; }
+.token.string { color: #39ff14 !important; text-shadow: 0 0 12px rgba(57, 255, 20, 0.7); }
+.token.function { color: #00d4ff !important; }
+.token.number, .token.boolean { color: #c7c7c7 !important; font-weight: bold; }
+.token.operator, .token.punctuation { color: #e0e0e0 !important; }
+.token.comment { color: #6272a4 !important; font-style: italic; }
+
+/* Code Copy Button */
+.copy-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(0, 255, 255, 0.1);
+    border: 1px solid #00ffff;
+    color: #00ffff;
+    padding: 3px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 10px;
+    z-index: 10;
+    transition: 0.3s;
+}
+
+.copy-btn:hover {
+    background: #00ffff;
+    color: #000;
+}
+
+/* ==================================================
+   CONTROLS & INPUT AREA
+   ================================================= */
+.controls-wrapper {
+    position: relative;
+    padding: 15px 20px;
+    background: #0f0f0f;
+    border-top: 1px solid #222;
+    display: flex;
+    justify-content: center;
+}
+
+.input-area {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #1e1e1e;
+    border: 1px solid #333;
+    border-radius: 12px;
+    padding: 6px 15px;
+    flex: 1;
+    max-width: 800px;
+}
+
+.command-input {
+    flex: 1;
+    background: none;
+    border: none;
+    color: #fff;
+    padding: 10px;
+    outline: none;
+}
+
+/* Image Preview */
+.image-preview {
+    position: absolute;
+    bottom: 70px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 220px;
+    height: 220px;
+    border: 1px solid #00ffee55;
+    border-radius: 10px;
+    background: #050505;
+    padding: 6px;
+    z-index: 50;
+}
+
+.image-preview.hidden { display: none; }
+
+.image-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.close-preview {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #ff0033;
+    color: #fff;
+    cursor: pointer;
+    border: none;
+}
+
+/* ==================================================
+   TACTICAL INPUT BUTTONS (REMASTERED)
+   ================================================== */
+
+/* กลุ่มปุ่มกดที่เน้นความสมมาตร */
+.button-group {
+    display: flex;
+    align-items: center;
+    gap: 12px; /* เพิ่มระยะห่างระหว่างปุ่ม */
+    padding-left: 10px;
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* ปรับแต่งปุ่มกดพื้นฐานให้ใหญ่ขึ้นและเท่ขึ้น */
+.button-group button {
+    width: 42px;  /* ขยายขนาดปุ่ม */
+    height: 42px; /* ขยายขนาดปุ่ม */
+    border-radius: 10px;
+    border: 1px solid rgba(76, 201, 240, 0.3);
+    background: rgba(20, 20, 25, 0.8);
+    color: #fff;
+    font-size: 1.2rem; /* ขนาดไอคอนใหญ่ขึ้น */
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    overflow: hidden;
+}
+
+/* เอฟเฟกต์เรืองแสงเมื่อ Hover */
+.button-group button:hover {
+    transform: translateY(-3px) scale(1.1);
+    border-color: var(--accent-blue);
+    box-shadow: 0 0 15px var(--border-glow);
+}
+
+/* ปุ่ม EXECUTE (สายฟ้า) - ต้องเด่นที่สุด */
+.send-btn {
+    background: linear-gradient(135deg, #00d4ff, #0055ff) !important;
+    border: none !important;
+    width: 50px !important; /* ใหญ่เป็นพิเศษ */
+    box-shadow: 0 0 10px rgba(0, 212, 255, 0.4);
+    font-weight: bold;
+}
+
+.send-btn:hover {
+    box-shadow: 0 0 25px rgba(0, 212, 255, 0.8) !important;
+    filter: brightness(1.2);
+}
+
+/* ปุ่ม UPLOAD (DNA) - เขียวมรกต */
+.upload-btn:hover {
+    color: var(--accent-green);
+    border-color: var(--accent-green) !important;
+    box-shadow: 0 0 15px rgba(0, 255, 65, 0.4) !important;
+}
+
+/* ปุ่ม CLEAR (หัวกะโหลก) - แดงสงคราม */
+.clear-history-btn:hover {
+    color: var(--war-red);
+    border-color: var(--war-red) !important;
+    box-shadow: 0 0 15px rgba(255, 77, 77, 0.4) !important;
+}
+
+/* ปุ่ม SPEAK (ลำโพง) - ม่วงพลังงาน */
+.speak-btn:hover {
+    color: var(--accent-purple);
+    border-color: var(--accent-purple) !important;
+    box-shadow: 0 0 15px rgba(157, 78, 221, 0.4) !important;
+}
+
+/* OS TAG ด้านซ้าย */
+.core-tag {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.6rem;
+    font-weight: 900;
+    padding: 4px 8px;
+    background: rgba(76, 201, 240, 0.1);
+    border: 1px solid var(--accent-blue);
+    color: var(--accent-blue);
+    border-radius: 4px;
+    letter-spacing: 1px;
+    text-shadow: 0 0 5px var(--accent-blue);
+    margin-right: 10px;
+}
+
+/* ==================================================
+   TRANSLATION BUTTON - DARK GEMINI EDITION
+   ================================================== */
+
+.message-actions {
+    margin-top: 8px;
+    display: flex;
+    gap: 8px;
+}
+
+.translate-btn, .translate-trigger {
+    background: rgba(157, 78, 221, 0.1);
+    border: 1px solid rgba(157, 78, 221, 0.4);
+    color: #d8b4fe;
+    padding: 5px 12px;
+    border-radius: 6px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    text-transform: uppercase;
+}
+
+.translate-btn:hover, .translate-trigger:hover {
+    background: rgba(157, 78, 221, 0.25);
+    border-color: var(--accent-purple);
+    color: #fff;
+    box-shadow: 0 0 12px rgba(157, 78, 221, 0.5);
+    transform: translateY(-1px);
+}
+
+.translate-btn:active, .translate-trigger:active {
+    transform: scale(0.95);
+}
+
+.translate-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    filter: grayscale(1);
+}
+
+/* เอฟเฟกต์ตอนกำลังถอดรหัส (Decoding Status) */
+.decoding-status {
+    color: var(--accent-purple);
+    font-style: italic;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.decoding-status::after {
+    content: "";
+    width: 12px;
+    height: 12px;
+    border: 2px solid var(--accent-purple);
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: tactical-spin 0.8s linear infinite;
+}
+
+@keyframes tactical-spin {
+    to { transform: rotate(360deg); }
+}
+
+/* ไอคอนภายในปุ่ม */
+.btn-icon {
+    font-size: 0.9rem;
+    filter: drop-shadow(0 0 2px var(--accent-purple));
+}
+
+/* --------------------------------------------------
+   SILVER METALLIC LOGO - NO BLUR EDITION
+   -------------------------------------------------- */
+.hero-banner .ascii-logo {
+    background: linear-gradient(
+        to right, 
+        #ffffff 0%, #a8a8a8 25%, #ffffff 50%, #a8a8a8 75%, #ffffff 100%
+    ) !important;
+    background-size: 200% auto !important;
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    font-family: monospace !important;
+    font-size: 10px !important;
+    line-height: 1.1 !important;
+    font-weight: bold !important;
+    display: block !important;
+    /* เงาเหล็กแบบคมชัด (Sharp Shadow) */
+    filter: drop-shadow(1px 1px 0px rgba(255,255,255,0.2)) !important;
+    animation: silverShine 4s linear infinite !important;
+}
+
+@keyframes silverShine {
+    to { background-position: 200% center; }
+}
+
+/* --------------------------------------------------
+   NEON CODE TERMINAL (HIGH INTENSITY)
+   -------------------------------------------------- */
+.ai-response pre {
+    background: #050505 !important;
+    border: 2px solid #00f3ff !important;
+    box-shadow: 0 0 15px rgba(0, 243, 255, 0.4) !important;
+    padding: 20px !important;
+    margin: 15px 0 !important;
+    border-radius: 8px !important;
+}
+
+.ai-response .hljs-keyword { color: #ff007c !important; text-shadow: 0 0 5px #ff007c; }
+.ai-response .hljs-string  { color: #00ff9d !important; text-shadow: 0 0 5px #00ff9d; }
+
+.sidebar-header {
+    display: flex;
+    justify-content: center; /* กึ่งกลางแนวนอน */
+    align-items: center;     /* กึ่งกลางแนวตั้ง (ถ้ามีความสูง) */
+}
+
+.system-title {
+    text-align: center;
+    margin: 0; /* ป้องกัน h3 ดันตำแหน่ง */
+}
+
+/* เพิ่มเติมใน chat.css */
+
+/* สไตล์กล่องรายงานปฏิบัติการ (Sentinel Log) */
+.sentinel-log-entry {
+    border-left: 4px solid var(--primary-neon);
+    margin: 10px 0;
+    padding: 12px;
+    font-family: 'Consolas', monospace;
+    font-size: 0.9em;
+    color: var(--primary-neon);
+    animation: scanline 0.2s infinite;
+}
+
+.phase-header {
+    color: var(--accent-blue);
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-top: 15px;
+    border-bottom: 1px solid var(--border-dim);
+    padding-bottom: 5px;
+}
+
+/* เอฟเฟกต์ไฟกะพริบเบาๆ */
+@keyframes scanline {
+    0% { opacity: 0.9; }
+    50% { opacity: 1; }
+    100% { opacity: 0.9; }
+}
+
+/* ==================================================
+   TACTICAL PAGINATION - CYBER BLUE VERSION
+   ================================================== */
+
+/* คอนเทนเนอร์หลัก: ปรับให้ดูเป็นแผงควบคุมกระจก (Glassmorphism) */
+.pagination-container {
+    display: flex;
+    justify-content: center; /* กึ่งกลางเพื่อความสง่างาม */
+    align-items: center;
+    gap: 20px;
+    padding: 15px;
+    background: linear-gradient(180deg, rgba(10, 10, 15, 0.8) 0%, rgba(0, 20, 40, 0.9) 100%);
+    border-top: 1px solid rgba(0, 212, 255, 0.3);
+    margin-top: auto; /* ดันให้อยู่เหนือ Commander Info */
+    border-radius: 12px 12px 0 0;
+    box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.5);
+}
+
+/* 🎯 การตกแต่งหมายเลขหน้า: เน้นความเท่แบบหน้าจอ HUD */
+.page-counter {
+    font-family: 'Orbitron', sans-serif;
+    color: #00d4ff;
+    font-size: 0.75rem;
+    font-weight: 900;
+    letter-spacing: 2px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(0, 212, 255, 0.05);
+    padding: 5px 15px;
+    border-radius: 20px;
+    border: 1px solid rgba(0, 212, 255, 0.1);
+}
+
+/* เน้นตัวเลขหน้าปัจจุบัน */
+.page-counter .current-num {
+    color: #ffffff;
+    background: linear-gradient(135deg, #00d4ff, #0055ff);
+    padding: 2px 8px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 212, 255, 0.6);
+    text-shadow: 0 0 5px #fff;
+}
+
+/* สัญลักษณ์คั่น (/) */
+.page-divider {
+    opacity: 0.5;
+    color: #4cc9f0;
+}
+
+/* ปุ่มกดสไตล์ Aero-Blue */
+.pagination-btn {
+    background: rgba(0, 212, 255, 0.1);
+    border: 1px solid #00d4ff;
+    color: #00d4ff;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 50%; /* ทรงกลมดูทันสมัย */
+    font-size: 0.8rem;
+}
+
+.pagination-btn:hover:not(:disabled) {
+    background: #00d4ff;
+    color: #000;
+    box-shadow: 0 0 15px #00d4ff;
+    transform: scale(1.1) rotate(10deg);
+}
+
+.pagination-btn:disabled {
+    border-color: #1a2a3a;
+    color: #1a2a3a;
+    cursor: not-allowed;
+    background: transparent;
+}
+
+
+/* คอนเทนเนอร์สำหรับปุ่มแนะนำยุทธวิธี */
+.suggestion-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 8px;
+    background: rgba(30, 41, 59, 0.4); /* เทาเข้มอมน้ำเงิน */
+    border: 1px solid rgba(76, 201, 240, 0.2);
+    box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.5);
+}
+
+.suggestion-btn {
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); /* Steel Grey Gradient */
+    border: 1px solid #475569;
+    color: #94a3b8; /* ฟ้าเทาจาง */
+    padding: 8px 16px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.suggestion-btn:hover {
+    background: #334155;
+    color: #38bdf8; /* สีฟ้าสว่างขึ้นเมื่อ Hover */
+    border-color: #38bdf8;
+    box-shadow: 0 0 12px rgba(56, 189, 248, 0.4);
+    transform: translateY(-2px);
+}
+
+.suggestion-btn:active {
+    transform: translateY(0) scale(0.95);
+}
+
+/* เพิ่มไอคอนเล็กๆ หน้าข้อความ (ถ้าต้องการ) */
+.suggestion-btn::before {
+    content: "◈";
+    font-size: 10px;
+    opacity: 0.6;
+}
+
+/* ส่วนหัวของ Sidebar */
+.sidebar-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem 1rem;
+    background: rgba(0, 0, 0, 0.3);
+    border-bottom: 1px solid rgba(0, 255, 65, 0.2);
+}
+
+/* โลโก้หน่วยรบ Dark Gemini - ปรับปรุงกรอบสีเทาเข้ม */
+.system-logo {
+    width: 160px;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 15px; 
+    
+    /* 🎯 ปรับเป็นกรอบสีเทาเข้ม Metalic */
+    border: 3px solid #333333;
+    
+    /* เพิ่มเงาแบบสมจริง (Dark Elevation) */
+    box-shadow: 
+        inset 0 0 10px rgba(0, 0, 0, 0.8), 
+        0 0 15px rgba(58, 58, 58, 0.5);
+    
+    margin-bottom: 1rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    filter: grayscale(0.2); /* ลดความสดของสีรูปลงเล็กน้อยเพื่อให้เข้ากับกรอบ */
+}
+
+.system-logo:hover {
+    transform: scale(1.05);
+    /* เมื่อ Hover จะเปลี่ยนเป็นสีเทาเงิน (Silver) เพื่อให้ดูมีการตอบสนอง */
+    border-color: #888888;
+    box-shadow: 0 0 25px rgba(136, 136, 136, 0.4);
+    filter: grayscale(0) brightness(1.1);
+}
+
+.system-title {
+    font-family: 'Orbitron', sans-serif; /* หรือฟอนต์แนว Sci-fi ที่ท่านชอบ */
+    color: #00ff41;
+    font-size: 1.1rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
