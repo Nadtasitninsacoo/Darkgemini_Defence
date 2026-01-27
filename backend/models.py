@@ -1,6 +1,8 @@
 from sqlalchemy import Column, Integer, String, Text, DateTime
 from datetime import datetime, timezone
 from sqlalchemy.orm import declarative_base
+from backend.models import Base, engine
+Base.metadata.create_all(bind=engine)
 
 # 🚩 ลบ 'from database import engine' บรรทัดบนทิ้ง
 # และใช้โครงสร้างนี้แทนเพื่อความเบ็ดเสร็จ
