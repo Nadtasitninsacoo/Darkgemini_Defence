@@ -12,12 +12,12 @@ flask-socketio
 # --- Database & Config ---
 sqlalchemy
 python-dotenv
+psycopg2-binary  # 🛡️ ท่านจอมพลต้องเพิ่มตัวนี้สำหรับเชื่อมต่อ PostgreSQL ครับ!
 
 # --- AI & Processing ---
-torch
-transformers
+# torch        <-- ❌ ลบทิ้ง (หนักเกินไปสำหรับ Render Free)
+# transformers <-- ❌ ลบทิ้ง (หนักเกินไปสำหรับ Render Free)
 numpy==1.26.4
-huggingface-hub
 google-generativeai
 
 # --- Utilities ---
@@ -25,4 +25,4 @@ pydantic
 pydantic-settings
 requests
 aiohttp
-pymysql
+# pymysql      <-- ❌ ถ้าใช้ PostgreSQL ไม่ต้องใช้ตัวนี้ครับ
