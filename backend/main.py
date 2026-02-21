@@ -15,6 +15,7 @@ from pydantic import BaseModel, Field
 from sqlalchemy.orm import Session
 from fastapi.staticfiles import StaticFiles
 from dotenv import load_dotenv
+from mangum import Mangum
 
 # ==================================================
 # 🛰️ 1. CORE INITIALIZATION & CONFIG
@@ -103,10 +104,9 @@ socket_app = socketio.ASGIApp(sio, other_asgi_app=app)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # ยอมรับการเชื่อมต่อจากทุกที่
-    allow_credentials=False,  # ปิดการใช้ Cookies เพื่อความลื่นไหลในการส่งสัญญาณ
-    allow_methods=["*"],  # ยอมรับทั้ง GET, POST และอื่นๆ
-    allow_headers=["*"],  # ยอมรับ Header ทุกรูปแบบ
+    allow_origins=["*"], 
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 app.mount("/data", StaticFiles(directory=BACKEND_DATA_PATH), name="data")
@@ -253,6 +253,7 @@ async def ask_endpoint(request: Request, db: Session = Depends(get_db)):
         logger.error(f"❌ [API_FATAL_ERROR]: {e}")
         raise HTTPException(status_code=500, detail="INTERNAL_STRIKE_FAILURE")
 
+handler = Mangum(app)
 
 @app.post("/execute_command")
 async def execute_command(request: CommandRequest):
